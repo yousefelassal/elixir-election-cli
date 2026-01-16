@@ -1,18 +1,10 @@
 defmodule Election do
-  @moduledoc """
-  Documentation for `Election`.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Election.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
+  defstruct(
+    name: "Mayor",
+    candidates: [
+      Candidate.new(1, "Will Ferrell"),
+      Candidate.new(2, "Kristen Wiig")
+    ],
+    next_id: 3
+  )
 end
