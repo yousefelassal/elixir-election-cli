@@ -55,6 +55,16 @@ defmodule Election do
     ]
   end
 
+  @doc """
+  Updates the election based on the given command arguments.
+  Currently supports updating the election name.
+  """
+  @spec update(%Election{}, [String.t()]) :: %Election{}
+  def update(election, ["n" <> _ | args]) do
+    name = Enum.join(args, " ") |> String.trim()
+    Map.put(election, :name, name)
+  end
+
   @spec sort_candidates_by_votes([%Candidate{}]) :: [%Candidate{}]
   defp sort_candidates_by_votes(candidates) do
     Enum.sort_by(candidates, & &1.votes, :desc)
