@@ -56,13 +56,25 @@ defmodule Election do
   end
 
   @doc """
-  Updates the election based on the given command arguments.
-  Currently supports updating the election name.
+  Updates the election based on the given command string.
   """
+  @spec update(%Election{}, String.t()) :: %Election{}
+  def update(election, cmd) when is_binary(cmd) do
+    update(election, String.split(cmd))
+  end
+
   @spec update(%Election{}, [String.t()]) :: %Election{}
   def update(election, ["n" <> _ | args]) do
     name = Enum.join(args, " ") |> String.trim()
     Map.put(election, :name, name)
+  end
+
+  @spec update(%Election{}, [String.t()]) :: %Election{}
+  def update(election, ["a" <> _ | args]) do
+    name = Enum.join(args, " ") |> String.trim()
+    candidate = Candidate.new(election.next_id, name)
+    candidates = [candidate | election.candidates]
+    %{election | candidates: candidates, next_id: election.next_id + 1}
   end
 
   @spec sort_candidates_by_votes([%Candidate{}]) :: [%Candidate{}]
