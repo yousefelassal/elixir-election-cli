@@ -29,7 +29,7 @@ defmodule Election do
   def view_body(election) do
     election.candidates
     |> sort_candidates_by_votes()
-    |> Enum.map(&format_candidate_line/1)
+    |> format_candidates()
     |> (fn cands -> [format_header() | cands] end).()
   end
 
@@ -41,6 +41,10 @@ defmodule Election do
   @spec format_candidate_line(%Candidate{}) :: String.t()
   defp format_candidate_line(%Candidate{id: id, name: name, votes: votes}) do
     "#{id}\t#{votes}\t#{name}\n"
+  end
+
+  defp format_candidates([%Candidate{} | _] = candidates) do
+    Enum.map(candidates, &format_candidate_line/1)
   end
 
   @spec format_header() :: [String.t()]
