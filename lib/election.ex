@@ -97,6 +97,11 @@ defmodule Election do
     vote(election, Integer.parse(id))
   end
 
+  def update(_election, ["q" <> _ | _]) do
+    IO.puts("Goodbye!")
+    System.halt(0)
+  end
+
   defp vote(election, {id, ""}) do
     candidates = Enum.map(election.candidates, &maybe_inc_vote(&1, id))
     %{election | candidates: candidates}
