@@ -44,6 +44,17 @@ defmodule Election do
     ]
   end
 
+  @doc """
+  Returns the complete view of the election including header, body, and footer.
+  """
+  def view(election) do
+    [
+      view_header(election),
+      view_body(election),
+      view_footer()
+    ]
+  end
+
   @spec sort_candidates_by_votes([%Candidate{}]) :: [%Candidate{}]
   defp sort_candidates_by_votes(candidates) do
     Enum.sort_by(candidates, & &1.votes, :desc)
