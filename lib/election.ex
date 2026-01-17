@@ -30,7 +30,7 @@ defmodule Election do
     election.candidates
     |> sort_candidates_by_votes()
     |> format_candidates()
-    |> (fn cands -> [format_header() | cands] end).()
+    |> prepend_candidate_header()
   end
 
   @spec sort_candidates_by_votes([%Candidate{}]) :: [%Candidate{}]
@@ -43,6 +43,7 @@ defmodule Election do
     "#{id}\t#{votes}\t#{name}\n"
   end
 
+  @spec format_candidates([%Candidate{}]) :: [String.t()]
   defp format_candidates([%Candidate{} | _] = candidates) do
     Enum.map(candidates, &format_candidate_line/1)
   end
@@ -50,5 +51,10 @@ defmodule Election do
   @spec format_header() :: [String.t()]
   defp format_header() do
     ["ID\tVotes\tName\n", "------------------\n"]
+  end
+
+  @spec prepend_candidate_header([String.t()]) :: [String.t()]
+  defp prepend_candidate_header(lines) do
+    [format_header() | lines]
   end
 end
