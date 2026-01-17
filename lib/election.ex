@@ -14,6 +14,10 @@ defmodule Election do
 
   def run, do: %Election{} |> run()
 
+  @doc """
+  Runs the election CLI loop.
+  """
+  @spec run(%Election{}) :: no_return()
   def run(election = %Election{}) do
     [IO.ANSI.clear(), IO.ANSI.home()] |> IO.write()
 
