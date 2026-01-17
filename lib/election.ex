@@ -77,6 +77,27 @@ defmodule Election do
     %{election | candidates: candidates, next_id: election.next_id + 1}
   end
 
+  def update(election, ["v" <> _ , id]) do
+    vote(election, Integer.parse(id))
+  end
+
+  defp vote(election, {id, ""}) do
+    candidates = Enum.map(election.candidates, &maybe_inc_vote(&1, id))
+    %{election | candidates: candidates}
+  end
+
+  defp vote(election, :error), do: election
+
+  defp maybe_inc_vote(candidate, id) when is_integer(id) do
+    maybe_inc_vote(candidate, candidate.id == id)
+  end
+
+  defp maybe_inc_vote(candidate, false), do: candidate
+
+  defp maybe_inc_vote(candidate, true) do
+    Map.update!(candidate, :votes, &(&1 + 1))
+  end
+
   @spec sort_candidates_by_votes([%Candidate{}]) :: [%Candidate{}]
   defp sort_candidates_by_votes(candidates) do
     Enum.sort_by(candidates, & &1.votes, :desc)
