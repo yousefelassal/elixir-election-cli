@@ -12,6 +12,9 @@ defmodule Election do
     next_id: 3
   )
 
+  @doc """
+  Creates a new Election struct with the given name.
+  """
   @spec view_header(%Election{}) :: [String.t()]
   def view_header(election) do
     [
@@ -19,6 +22,9 @@ defmodule Election do
     ]
   end
 
+  @doc """
+  Returns the body of the election view, listing candidates sorted by votes.
+  """
   @spec view_body(%Election{}) :: [String.t()]
   def view_body(election) do
     election.candidates
