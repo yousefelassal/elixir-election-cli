@@ -8,6 +8,7 @@ defmodule Election do
     next_id: 3
   )
 
+  @spec view_header(%Election{}) :: [String.t()]
   def view_header(election) do
     [
       "Election for: #{election.name}\n",
