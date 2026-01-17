@@ -33,6 +33,17 @@ defmodule Election do
     |> prepend_candidate_header()
   end
 
+  @doc """
+  Returns the footer of the election view with available commands.
+  """
+  @spec view_footer() :: [String.t()]
+  def view_footer() do
+    [
+      "\n",
+      "commands: (n)ame <election>, (a)dd <candidate>, (v)ote <id>, (q)uit\n"
+    ]
+  end
+
   @spec sort_candidates_by_votes([%Candidate{}]) :: [%Candidate{}]
   defp sort_candidates_by_votes(candidates) do
     Enum.sort_by(candidates, & &1.votes, :desc)
