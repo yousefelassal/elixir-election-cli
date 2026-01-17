@@ -18,6 +18,10 @@ defmodule Election do
     [IO.ANSI.clear(), IO.ANSI.home()] |> IO.write()
 
     election |> view |> IO.write
+
+    command = IO.gets(">") |> String.trim()
+
+    election |> update(command) |> run()
   end
 
   @doc """
