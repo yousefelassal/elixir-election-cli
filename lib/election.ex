@@ -12,6 +12,14 @@ defmodule Election do
     next_id: 3
   )
 
+  def run, do: %Election{} |> run()
+
+  def run(election = %Election{}) do
+    [IO.ANSI.clear(), IO.ANSI.home()] |> IO.write()
+
+    election |> view |> IO.write
+  end
+
   @doc """
   Creates a new Election struct with the given name.
   """
