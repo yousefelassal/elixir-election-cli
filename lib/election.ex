@@ -27,14 +27,17 @@ defmodule Election do
     |> (fn cands -> [format_header() | cands] end).()
   end
 
+  @spec sort_candidates_by_votes([%Candidate{}]) :: [%Candidate{}]
   defp sort_candidates_by_votes(candidates) do
     Enum.sort_by(candidates, & &1.votes, :desc)
   end
 
+  @spec format_candidate_line(%Candidate{}) :: String.t()
   defp format_candidate_line(%Candidate{id: id, name: name, votes: votes}) do
     "#{id}\t#{votes}\t#{name}\n"
   end
 
+  @spec format_header() :: [String.t()]
   defp format_header() do
     ["ID\tVotes\tName\n", "------------------\n"]
   end
